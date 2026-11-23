@@ -67,11 +67,11 @@ export default function ListItemModal() {
 
     createItem({
       title: title.trim(),
-      description: description.trim() || `${title.trim()} available for campus wardrobe rental. Perfect for events, formals, or interviews.`,
+      description: description.trim() || `${title.trim()} available for UVCE campus wardrobe rental. Perfect for events, formals, or placement drives.`,
       category,
       size,
-      dailyPrice: Number(dailyPrice) || 15,
-      securityDeposit: Number(securityDeposit) || 35,
+      dailyPrice: Number(dailyPrice) || 300,
+      securityDeposit: Number(securityDeposit) || 600,
       pickupLocation,
       conditionNotes,
       images: [finalPhoto]
@@ -83,42 +83,43 @@ export default function ListItemModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden max-h-[90vh] flex flex-col"
+        className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden max-h-[92vh] sm:max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="px-6 py-5 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/70">
+        {/* Sticky Header */}
+        <div className="px-5 sm:px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between bg-zinc-50/80 dark:bg-zinc-800/60 shrink-0">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-600 uppercase tracking-wider">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
               <Shirt className="w-3.5 h-3.5" />
               Lend From Your Closet
             </div>
-            <h2 className="text-xl font-black text-zinc-900 tracking-tight">
+            <h2 className="text-lg sm:text-xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight">
               List Wardrobe Piece
             </h2>
           </div>
           <button
             onClick={() => setIsListItemOpen(false)}
-            className="p-1.5 rounded-full hover:bg-zinc-200 text-zinc-500 transition-colors"
+            className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400 transition-colors"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 overflow-y-auto space-y-6">
+        {/* Scrollable Form Body */}
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 overflow-y-auto space-y-5 sm:space-y-6">
           
           {/* Photo Selection Section */}
           <div className="space-y-3">
-            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700">
-              1. Item Photo (Choose Preset, Enter URL, or Upload)
+            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
+              1. Item Photo (Preset, URL, or Upload)
             </label>
 
-            {/* Quick 1-Click Presets */}
+            {/* Quick Presets */}
             <div>
-              <p className="text-[11px] text-zinc-500 mb-2">
+              <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mb-2">
                 Click a realistic preset or enter your custom photo:
               </p>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
@@ -130,7 +131,7 @@ export default function ListItemModal() {
                       key={i}
                       onClick={() => handlePresetSelect(opt)}
                       className={`relative aspect-[3/4] rounded-xl overflow-hidden border-2 transition-all ${
-                        isSelected ? 'border-blue-600 ring-2 ring-blue-300 scale-95' : 'border-zinc-200 opacity-70 hover:opacity-100'
+                        isSelected ? 'border-blue-600 dark:border-blue-400 ring-2 ring-blue-300 dark:ring-blue-900 scale-95' : 'border-zinc-200 dark:border-zinc-700 opacity-70 hover:opacity-100'
                       }`}
                     >
                       <img src={opt.url} alt={opt.name} className="w-full h-full object-cover" />
@@ -146,9 +147,9 @@ export default function ListItemModal() {
             </div>
 
             {/* Custom URL or File Upload option */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-1">
               <div>
-                <label className="block text-[11px] font-semibold text-zinc-600 mb-1">
+                <label className="block text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 mb-1">
                   Or Paste Image URL:
                 </label>
                 <input
@@ -159,15 +160,15 @@ export default function ListItemModal() {
                     setImageUrl(e.target.value);
                     if (e.target.value.trim()) setPhotoPreview(e.target.value.trim());
                   }}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-semibold text-zinc-600 mb-1">
+                <label className="block text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 mb-1">
                   Or Upload From Device:
                 </label>
-                <label className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-dashed border-zinc-300 bg-zinc-50 hover:bg-zinc-100 cursor-pointer text-xs font-medium text-zinc-700">
+                <label className="min-h-[42px] flex items-center justify-center gap-2 px-3 py-2 rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer text-xs font-medium text-zinc-700 dark:text-zinc-300 transition-colors">
                   <Upload className="w-3.5 h-3.5 text-zinc-500" />
                   <span>Choose local file</span>
                   <input
@@ -182,56 +183,56 @@ export default function ListItemModal() {
           </div>
 
           {/* Details Section */}
-          <div className="space-y-4 pt-2 border-t border-zinc-100">
-            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700">
+          <div className="space-y-3.5 sm:space-y-4 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
               2. Wardrobe Details
             </label>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                 Outfit / Garment Title <span className="text-rose-500">*</span>
               </label>
               <input
                 type="text"
-                placeholder="e.g. Zara Tailored Black Blazer or Reformation Floral Slip Dress"
+                placeholder="e.g. Zara Placement Blazer or Silk Farewell Dress"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                   Category Occasion
                 </label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
                 >
-                  <option value="Formal">Formal & Interviews</option>
-                  <option value="Party">Party & Formals</option>
-                  <option value="Ethnic/Traditional">Ethnic / Traditional</option>
-                  <option value="Winterwear">Winterwear & Coats</option>
-                  <option value="Accessories">Accessories & Bags</option>
+                  <option value="Formal" className="dark:bg-zinc-800">Formal & Placement</option>
+                  <option value="Party" className="dark:bg-zinc-800">Party & Fests</option>
+                  <option value="Ethnic/Traditional" className="dark:bg-zinc-800">Ethnic / Traditional Day</option>
+                  <option value="Winterwear" className="dark:bg-zinc-800">Winterwear & Jackets</option>
+                  <option value="Accessories" className="dark:bg-zinc-800">Accessories & Bags</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                   Size
                 </label>
-                <div className="flex gap-1.5">
+                <div className="flex gap-1 overflow-x-auto pb-0.5">
                   {['XS', 'S', 'M', 'L', 'XL', 'XXL'].map(sz => (
                     <button
                       type="button"
                       key={sz}
                       onClick={() => setSize(sz)}
-                      className={`flex-1 py-1.5 text-xs font-bold rounded-lg border transition-all ${
+                      className={`flex-1 min-w-[32px] py-1.5 text-xs font-bold rounded-lg border transition-all ${
                         size === sz
-                          ? 'bg-zinc-900 text-white border-zinc-900 shadow-sm'
-                          : 'bg-zinc-50 hover:bg-zinc-100 text-zinc-700 border-zinc-200'
+                          ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 border-zinc-900 dark:border-zinc-100 shadow-sm'
+                          : 'bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
                       }`}
                     >
                       {sz}
@@ -242,7 +243,7 @@ export default function ListItemModal() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                 Description & Styling Tips
               </label>
               <textarea
@@ -250,24 +251,24 @@ export default function ListItemModal() {
                 placeholder="Describe fit, fabric, occasions it works great for, and styling tips..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3.5 py-2 text-xs rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full px-3.5 py-2 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
           </div>
 
           {/* Pricing & Campus Handoff Section */}
-          <div className="space-y-4 pt-2 border-t border-zinc-100">
-            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700">
+          <div className="space-y-3.5 sm:space-y-4 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <label className="block text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
               3. Pricing & Campus Handoff
             </label>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                   Daily Rental Rate (₹) <span className="text-rose-500">*</span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-2 text-zinc-400 font-bold">₹</span>
+                  <span className="absolute left-3 top-2.5 text-zinc-400 font-bold">₹</span>
                   <input
                     type="number"
                     min="50"
@@ -275,18 +276,18 @@ export default function ListItemModal() {
                     step="50"
                     value={dailyPrice}
                     onChange={(e) => setDailyPrice(e.target.value)}
-                    className="w-full pl-7 pr-3 py-2 text-xs font-bold rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    className="w-full pl-7 pr-3 py-2 text-xs font-bold rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
                   />
-                  <span className="absolute right-3 top-2 text-xs text-zinc-400">/ day</span>
+                  <span className="absolute right-3 top-2.5 text-xs text-zinc-400">/ day</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-zinc-700 mb-1">
+                <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                   Refundable Security Deposit (₹)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-2 text-zinc-400 font-bold">₹</span>
+                  <span className="absolute left-3 top-2.5 text-zinc-400 font-bold">₹</span>
                   <input
                     type="number"
                     min="100"
@@ -294,24 +295,24 @@ export default function ListItemModal() {
                     step="50"
                     value={securityDeposit}
                     onChange={(e) => setSecurityDeposit(e.target.value)}
-                    className="w-full pl-7 pr-3 py-2 text-xs font-bold rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                    className="w-full pl-7 pr-3 py-2 text-xs font-bold rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
                   />
-                  <span className="absolute right-3 top-2 text-[10px] text-emerald-600 font-medium">escrow locked</span>
+                  <span className="absolute right-3 top-2.5 text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">escrow locked</span>
                 </div>
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                 Convenient Campus Pickup Spot
               </label>
               <select
                 value={pickupLocation}
                 onChange={(e) => setPickupLocation(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 bg-white focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
               >
                 {CAMPUS_LOCATIONS.map((loc, idx) => (
-                  <option key={idx} value={loc}>
+                  <option key={idx} value={loc} className="dark:bg-zinc-800">
                     {loc}
                   </option>
                 ))}
@@ -319,7 +320,7 @@ export default function ListItemModal() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-zinc-700 mb-1">
+              <label className="block text-xs font-semibold text-zinc-700 dark:text-zinc-300 mb-1">
                 Garment Condition Notes
               </label>
               <input
@@ -327,25 +328,25 @@ export default function ListItemModal() {
                 value={conditionNotes}
                 onChange={(e) => setConditionNotes(e.target.value)}
                 placeholder="e.g. Dry cleaned, unworn since formal, comes with hanger"
-                className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-600 min-h-[42px]"
               />
             </div>
           </div>
 
           {error && (
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs">
               {error}
             </div>
           )}
 
-          {/* Submit Button */}
-          <div className="pt-2">
+          {/* Submit Button (Accessible 48px tap target) */}
+          <div className="pt-2 sticky bottom-0 bg-white dark:bg-zinc-900 py-2 border-t border-zinc-100 dark:border-zinc-800">
             <button
               type="submit"
-              className="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs font-black uppercase tracking-wider shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center gap-2"
+              className="w-full min-h-[48px] py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl text-xs font-black uppercase tracking-wider shadow-lg shadow-blue-500/25 active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <Shirt className="w-4 h-4" />
-              Publish Listing to Campus Wardrobe
+              Publish Listing to UVCE Wardrobe
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

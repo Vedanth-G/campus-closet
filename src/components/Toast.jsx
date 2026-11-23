@@ -11,7 +11,7 @@ export default function Toast() {
   const isError = toast.type === 'error';
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 max-w-md animate-in fade-in slide-in-from-bottom-5 duration-300">
+    <div className="fixed bottom-4 sm:bottom-6 left-4 right-4 sm:left-auto sm:right-6 z-50 max-w-md animate-in fade-in slide-in-from-bottom-5 duration-300">
       <div className={`flex items-start gap-3 p-4 rounded-2xl shadow-xl border backdrop-blur-md ${
         isSuccess
           ? 'bg-zinc-900/95 text-white border-zinc-700/80'

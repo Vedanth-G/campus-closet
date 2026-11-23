@@ -88,48 +88,49 @@ export default function ReviewModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-zinc-200 overflow-hidden"
+        className="relative w-full max-w-lg bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden max-h-[92vh] sm:max-h-[85vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="px-6 py-5 border-b border-zinc-100 flex items-center justify-between bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+        {/* Sticky Header */}
+        <div className="px-5 sm:px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between bg-gradient-to-r from-blue-600 to-indigo-600 text-white shrink-0">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-xs font-semibold mb-1">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-[10px] sm:text-xs font-semibold mb-1">
               <ShieldCheck className="w-3.5 h-3.5" />
-              Verified Two-Way Peer Review
+              Verified UVCE Peer Review
             </div>
-            <h2 className="text-xl font-bold tracking-tight">
-              {isRenter ? 'Review Garment & Lender' : 'Review Student Renter'}
+            <h2 className="text-lg sm:text-xl font-bold tracking-tight">
+              {isRenter ? 'Review Garment & Lender' : 'Review Student Borrower'}
             </h2>
           </div>
           <button
             onClick={() => setActiveReviewRental(null)}
-            className="p-1.5 rounded-full hover:bg-white/20 text-white transition-colors"
+            className="min-h-[40px] min-w-[40px] flex items-center justify-center rounded-full hover:bg-white/20 text-white transition-colors"
+            aria-label="Close review modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
+        {/* Scrollable Body */}
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5 sm:space-y-6 overflow-y-auto">
           
           {/* Target Profile Snippet */}
-          <div className="flex items-center gap-3 p-3 bg-zinc-50 rounded-2xl border border-zinc-200/80">
+          <div className="flex items-center gap-3 p-3 bg-zinc-50 dark:bg-zinc-800/60 rounded-2xl border border-zinc-200/80 dark:border-zinc-700/80">
             <img
               src={targetAvatar}
               alt={targetName}
-              className="w-12 h-12 rounded-full object-cover border border-zinc-200"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover border border-zinc-200 dark:border-zinc-700 shrink-0"
             />
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-zinc-900 truncate">
+              <p className="text-xs font-bold text-zinc-900 dark:text-zinc-100 truncate">
                 {isRenter ? `Reviewing ${targetName} for:` : `Reviewing ${targetName} (Borrower)`}
               </p>
-              <p className="text-xs text-blue-600 font-semibold truncate">
+              <p className="text-xs text-blue-600 dark:text-blue-400 font-semibold truncate">
                 {rental.itemTitle}
               </p>
-              <p className="text-[10px] text-zinc-400">
+              <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
                 Rental Period: {rental.startDate} → {rental.endDate}
               </p>
             </div>
@@ -138,10 +139,10 @@ export default function ReviewModal() {
           {/* Rating Criterion 1 */}
           <div className="space-y-1.5">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-bold text-zinc-800">
+              <label className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
                 {isRenter ? '1. Garment Condition & Fit Accuracy' : '1. Garment Care & Cleanliness'}
               </label>
-              <span className="text-xs font-bold text-amber-600">★ {score1}.0</span>
+              <span className="text-xs font-bold text-amber-600 dark:text-amber-400">★ {score1}.0</span>
             </div>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -149,19 +150,19 @@ export default function ReviewModal() {
                   type="button"
                   key={star}
                   onClick={() => setScore1(star)}
-                  className="p-1 focus:outline-none transition-transform hover:scale-110"
+                  className="p-1 min-h-[36px] min-w-[36px] flex items-center justify-center focus:outline-none transition-transform hover:scale-110 active:scale-95"
                 >
                   <Star
                     className={`w-7 h-7 ${
                       star <= score1
                         ? 'fill-amber-400 text-amber-500'
-                        : 'text-zinc-200'
+                        : 'text-zinc-200 dark:text-zinc-700'
                     }`}
                   />
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-zinc-500">
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
               {isRenter
                 ? 'Did the item match the photos and arrive clean & ready to wear?'
                 : 'Was the garment treated with care and returned spotless?'}
@@ -169,12 +170,12 @@ export default function ReviewModal() {
           </div>
 
           {/* Rating Criterion 2 */}
-          <div className="space-y-1.5 pt-2 border-t border-zinc-100">
+          <div className="space-y-1.5 pt-2 border-t border-zinc-100 dark:border-zinc-800">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-bold text-zinc-800">
-                {isRenter ? '2. Lender Communication & Punctuality' : '2. Renter Punctuality & Communication'}
+              <label className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
+                {isRenter ? '2. Lender Communication & Punctuality' : '2. Borrower Punctuality & Communication'}
               </label>
-              <span className="text-xs font-bold text-amber-600">★ {score2}.0</span>
+              <span className="text-xs font-bold text-amber-600 dark:text-amber-400">★ {score2}.0</span>
             </div>
             <div className="flex gap-2">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -182,31 +183,31 @@ export default function ReviewModal() {
                   type="button"
                   key={star}
                   onClick={() => setScore2(star)}
-                  className="p-1 focus:outline-none transition-transform hover:scale-110"
+                  className="p-1 min-h-[36px] min-w-[36px] flex items-center justify-center focus:outline-none transition-transform hover:scale-110 active:scale-95"
                 >
                   <Star
                     className={`w-7 h-7 ${
                       star <= score2
                         ? 'fill-amber-400 text-amber-500'
-                        : 'text-zinc-200'
+                        : 'text-zinc-200 dark:text-zinc-700'
                     }`}
                   />
                 </button>
               ))}
             </div>
-            <p className="text-[11px] text-zinc-500">
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
               {isRenter
-                ? 'Was pickup and return smooth, on time, and friendly?'
+                ? 'Was pickup and return smooth, on time, and friendly at UVCE?'
                 : 'Did the student show up on time for handoff and return?'}
             </p>
           </div>
 
           {/* Quick-Select Tags */}
-          <div className="space-y-2 pt-2 border-t border-zinc-100">
-            <label className="block text-xs font-bold text-zinc-800">
+          <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <label className="block text-xs font-bold text-zinc-800 dark:text-zinc-200">
               Quick Highlights (Select all that apply)
             </label>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5 sm:gap-2">
               {tagsList.map((tag) => {
                 const isSelected = selectedTags.includes(tag);
                 return (
@@ -214,10 +215,10 @@ export default function ReviewModal() {
                     type="button"
                     key={tag}
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                    className={`min-h-[36px] px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center ${
                       isSelected
-                        ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-300'
-                        : 'bg-zinc-100 hover:bg-zinc-200 text-zinc-700'
+                        ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-300 dark:ring-blue-900'
+                        : 'bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300'
                     }`}
                   >
                     {isSelected && <Check className="w-3 h-3 inline mr-1 stroke-[3]" />}
@@ -229,8 +230,8 @@ export default function ReviewModal() {
           </div>
 
           {/* Written Feedback Textarea */}
-          <div className="space-y-1.5 pt-2 border-t border-zinc-100">
-            <label className="block text-xs font-bold text-zinc-800">
+          <div className="space-y-1.5 pt-2 border-t border-zinc-100 dark:border-zinc-800">
+            <label className="block text-xs font-bold text-zinc-800 dark:text-zinc-200">
               Peer Comment (Visible on profile & item card)
             </label>
             <textarea
@@ -242,19 +243,21 @@ export default function ReviewModal() {
                   ? "Describe fit, fabric quality, and your experience with the lender..."
                   : "How was the borrower during the handoff and return?"
               }
-              className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-zinc-300 focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full py-3.5 px-4 bg-zinc-950 hover:bg-black text-white rounded-2xl text-xs font-black uppercase tracking-wider shadow-lg shadow-zinc-950/20 active:scale-95 transition-all flex items-center justify-center gap-2"
-          >
-            <Send className="w-4 h-4 text-lime-400" />
-            Submit Verified Review & Update Ratings
-          </button>
+          {/* Sticky Bottom Submit Button */}
+          <div className="pt-2 sticky bottom-0 bg-white dark:bg-zinc-900 py-2 border-t border-zinc-100 dark:border-zinc-800">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full min-h-[48px] py-3.5 px-4 bg-zinc-950 dark:bg-lime-400 hover:bg-black dark:hover:bg-lime-300 text-white dark:text-zinc-950 rounded-2xl text-xs font-black uppercase tracking-wider shadow-lg shadow-zinc-950/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+              <Send className="w-4 h-4 text-lime-400 dark:text-zinc-950" />
+              Submit Verified Review & Update Ratings
+            </button>
+          </div>
         </form>
       </div>
     </div>

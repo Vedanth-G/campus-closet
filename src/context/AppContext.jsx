@@ -8,7 +8,8 @@ export const STORAGE_KEYS = {
   USERS: 'uvce_campus_closet_users_v2',
   ITEMS: 'uvce_campus_closet_items_v2',
   RENTALS: 'uvce_campus_closet_rentals_v2',
-  CURRENT_USER_ID: 'uvce_campus_closet_current_user_id_v2'
+  CURRENT_USER_ID: 'uvce_campus_closet_current_user_id_v2',
+  THEME: 'uvce_campus_closet_theme_v1'
 };
 
 export function AppProvider({ children }) {
@@ -53,6 +54,36 @@ export function AppProvider({ children }) {
       return INITIAL_RENTALS;
     }
   });
+
+  // 5. Theme State (Light / Dark)
+  const [theme, setTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEYS.THEME);
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.THEME, theme);
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      showToast(`Switched to ${next === 'dark' ? '🌙 Dark Mode' : '☀️ Light Mode'}`, 'info');
+      return next;
+    });
+  };
 
   // UI state
   const [currentView, setCurrentView] = useState('marketplace'); // 'marketplace' | 'dashboard'
@@ -485,7 +516,12 @@ export function AppProvider({ children }) {
 
         // Toasts
         toast,
-        showToast
+        showToast,
+
+        // Theme
+        theme,
+        setTheme,
+        toggleTheme
       }}
     >
       {children}
